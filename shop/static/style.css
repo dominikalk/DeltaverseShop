@@ -1,15 +1,13 @@
 :root {
-  --primary-color: #b78efe;
+  --primary-color: #9271cb;
   --secondary-color: #381d78;
   --tertiary-color: #14023f;
   --dark-gray: #111111;
   --light-gray: #333333;
   --white: white;
-
+  /* old-primary #b78efe */
   --wrapper-width: 1000px;
-
   --transition: all ease-out 0.2s;
-
   --nav-height: 5rem;
 }
 
@@ -19,6 +17,11 @@ body {
 
   font-family: Arial, Helvetica, sans-serif;
   color: var(--white);
+}
+
+a {
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
 }
 
 .navbar {
@@ -42,12 +45,14 @@ body {
   font-size: 1.5rem;
   text-decoration: none;
   color: var(--white);
+  font-weight: bold;
 }
 
 .nav-link {
   text-decoration: none;
   margin-left: 1rem;
   color: var(--white);
+  font-weight: bold;
 }
 
 .wrapper {
@@ -67,7 +72,12 @@ body {
   cursor: pointer;
 }
 
-.button:hover {
+.hover-move {
+  transition: var(--transition);
+}
+
+.button:hover,
+.hover-move:hover {
   transform: translateY(0.2rem);
 }
 
@@ -84,7 +94,14 @@ body {
   text-align: center;
   margin-bottom: 2rem;
   font-size: 5rem;
-  margin-top: 0;
+  margin: 0 auto;
+}
+
+.small-title {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 4rem;
+  margin: 0 auto;
 }
 
 .info-text {
@@ -92,7 +109,15 @@ body {
   font-size: 1.1rem;
   line-height: 1.7rem;
   width: 80%;
-  margin: auto;
+  margin: 2rem auto auto auto;
+}
+
+.small-info-text {
+  text-align: center;
+  font-size: 1.1rem;
+  line-height: 1.7rem;
+  width: 80%;
+  margin: 1rem auto auto auto;
 }
 
 .content-container {
@@ -101,39 +126,7 @@ body {
   color: var(--dark-gray);
 }
 
-.item-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.item {
-  border: 1px solid var(--secondary-color);
-  border-radius: 1rem;
-  width: 32%;
-  margin-bottom: 1rem;
-  overflow: hidden;
-}
-
-.item-picture {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: var(--transition);
-}
-
-.item:hover .item-picture {
-  transform: scale(1.1);
-}
-
-.item-name {
-  color: var(--secondary-color);
-  margin: 0;
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-.not-found-container {
+.full-container {
   min-height: calc(100vh - var(--nav-height));
   background: linear-gradient(var(--tertiary-color), var(--secondary-color));
   text-align: center;

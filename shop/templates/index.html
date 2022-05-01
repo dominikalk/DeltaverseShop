@@ -1,30 +1,58 @@
-{% extends 'layout.html' %} {% block content %}
+{% extends 'layout.html' %} {% block header %}
+<link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}" />
+{% endblock header %} {% block content %}
 <div class="title-container">
   <div class="wrapper">
     <h1 class="title">Delt<span class="highlight">Δ</span>verse Market.</h1>
     <p class="info-text">
       Did you know that in maths, the greek symbol deltΔ is used to describe the
-      <span class="highlight">change in</span> a value. Well at DeltΔverse our
+      <span class="highlight">change in</span> a value? Well at DeltΔverse our
       core values stem from bringing positive change into our very own world.
     </p>
   </div>
 </div>
 <div class="content-container">
   <div class="wrapper">
+    <div class="filters-container">
+      <div style="display: flex">
+        <div class="filter-item hover-move" style="background-color: #381d78">
+          All
+        </div>
+        <div class="filter-item hover-move">Land</div>
+        <div class="filter-item hover-move">Clothes</div>
+        <div class="filter-item hover-move">Accessories</div>
+      </div>
+
+      <div style="position: relative">
+        <select name="sort">
+          <option value="price_low">Price: Low to High</option>
+          <option value="price_high">Price: Hight to Low</option>
+          <option value="eco_low">Carbon: Low to High</option>
+        </select>
+        <img
+          src="{{ url_for('static', filename='chevron-down.svg') }}"
+          alt="chevron-down"
+          style="position: absolute; right: 0; margin: 0.6rem 0.5rem"
+        />
+      </div>
+    </div>
+
     <div class="item-container">
       {% for post in posts %}
-      <div class="item">
-        <div style="height: 200px; overflow: hidden">
+      <a href="{{ url_for('product') }}" class="item">
+        <div class="item-picture-container">
           <img src="{{ post.picture }}" alt="cover" class="item-picture" />
         </div>
         <div style="padding: 1rem">
           <p class="item-name">{{ post.name }}</p>
-          <p>{{ post.description }}</p>
-          <p>£{{ post.price }}</p>
-          <p>Virtual Emmissions: {{ post.carbon }}g</p>
+          <p class="item-description">{{ post.description }}</p>
+          <div style="display: flex; justify-content: space-between">
+            <p>£{{ post.price }}</p>
+            <p>CO<sub>2</sub>: {{ post.carbon }}g</p>
+          </div>
           <div class="button">Add to basket</div>
         </div>
-      </div>
+      </a>
       {% endfor %}
     </div>
   </div>

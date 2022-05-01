@@ -1,4 +1,38 @@
-{% extends 'layout.html' %} {% block content %}
-<h1>Cart Page</h1>
-<a href="{{ url_for('checkout') }}" class="button">Go to checkout</a>
+{% extends 'layout.html' %} {% block header %}
+<link rel="stylesheet" href="{{ url_for('static', filename='cart.css') }}" />
+{% endblock header %} {% block content %}
+<div class="title-container">
+  <div class="wrapper">
+    <h1 class="small-title">Delt<span class="highlight">Δ</span>verse Cart.</h1>
+    <p class="small-info-text">
+      These are the items in your cart.
+      <span class="highlight">Go to checkout</span> to purchase them.
+    </p>
+  </div>
+</div>
+<div class="content-container">
+  <div class="wrapper">
+    {% for post in posts %}
+    <a href="{{ url_for('product') }}" class="cart-item">
+      <div class="cart-picture-container">
+        <img src="{{ post.picture }}" alt="cover" class="cart-picture" />
+      </div>
+      <div class="cart-content">
+        <div class="cart-info">
+          <p class="item-name">{{ post.name }}</p>
+          <p class="item-description">{{ post.description }}</p>
+        </div>
+        <div class="cart-values">
+          <p>£{{ post.price }}</p>
+          <p>CO<sub>2</sub>: {{ post.carbon }}g</p>
+        </div>
+      </div>
+      <div class="remove-button">Remove</div>
+    </a>
+    {% endfor %}
+    <a href="{{ url_for('checkout') }}" class="checkout-button">
+      Go to checkout
+    </a>
+  </div>
+</div>
 {% endblock content %}

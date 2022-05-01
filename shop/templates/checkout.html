@@ -1,3 +1,42 @@
-{% extends 'layout.html' %} {% block content %}
-<h1>Checkout Page</h1>
+{% extends 'layout.html' %} {% block header %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='checkout.css') }}"
+/>
+{% endblock header %} {% block content %}
+<div class="title-container">
+  <div class="wrapper">
+    <h1 class="small-title">
+      Checkout from the Delt<span class="highlight">Δ</span>verse.
+    </h1>
+    <p class="small-info-text">
+      Checkout to get your <span class="highlight">flashy, virtual</span> goods.
+    </p>
+  </div>
+</div>
+<div class="content-container">
+  <div class="wrapper" style="display: flex">
+    <div class="left-content">
+      <p class="your-cart-text">Payment Form</p>
+    </div>
+    <div class="right-content">
+      <p class="your-cart-text">Your Cart</p>
+
+      {% for post in posts %}
+      <div class="cart-item">
+        <img src="{{ post.picture }}" alt="cover" class="cart-picture" />
+        <div class="cart-content">
+          <p class="item-name">{{ post.name }}</p>
+          <div class="cart-info">
+            <p>£{{ post.price }}</p>
+            <p>CO<sub>2</sub>: {{ post.carbon }}g</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+      <a href="{{ url_for('cart') }}" class="back-button">Back to cart</a>
+    </div>
+  </div>
+</div>
 {% endblock content %}
