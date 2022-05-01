@@ -1,3 +1,32 @@
 {% extends 'layout.html' %} {% block content %}
-<h1>Home Page</h1>
+<div class="title-container">
+  <div class="wrapper">
+    <h1 class="title">Delt<span class="highlight">Δ</span>verse Market.</h1>
+    <p class="info-text">
+      Did you know that in maths, the greek symbol deltΔ is used to describe the
+      <span class="highlight">change in</span> a value. Well at DeltΔverse our
+      core values stem from bringing positive change into our very own world.
+    </p>
+  </div>
+</div>
+<div class="content-container">
+  <div class="wrapper">
+    <div class="item-container">
+      {% for post in posts %}
+      <div class="item">
+        <div style="height: 200px; overflow: hidden">
+          <img src="{{ post.picture }}" alt="cover" class="item-picture" />
+        </div>
+        <div style="padding: 1rem">
+          <p class="item-name">{{ post.name }}</p>
+          <p>{{ post.description }}</p>
+          <p>£{{ post.price }}</p>
+          <p>Virtual Emmissions: {{ post.carbon }}g</p>
+          <div class="button">Add to basket</div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
 {% endblock content %}

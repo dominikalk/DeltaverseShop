@@ -1,4 +1,4 @@
 {% extends 'layout.html' %} {% block content %}
 <h1>Cart Page</h1>
-<a href="/checkout">Go to checkout</a>
+<a href="{{ url_for('checkout') }}" class="button">Go to checkout</a>
 {% endblock content %}
