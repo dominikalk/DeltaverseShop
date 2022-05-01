@@ -4,3 +4,4 @@ x*
 *.db
 .DS_Store
 logs*
+__pycache__

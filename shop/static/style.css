@@ -1,0 +1,23 @@
+body {
+  margin: 0;
+}
+
+.navbar {
+  width: 100%;
+  background-color: gray;
+  padding: 1rem 0;
+}
+
+.wrapper {
+  max-width: 1000px;
+  padding: 0 2rem;
+  margin: 0 auto;
+}
+
+.button {
+  background-color: gray;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  color: white;
+  text-decoration: none;
+}
