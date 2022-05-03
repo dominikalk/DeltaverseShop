@@ -5,35 +5,54 @@
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='style.css') }}"
+      href="{{ url_for('static', filename='styles/style.css') }}"
     />
     <link
       rel="icon"
       type="image/x-icon"
-      href="{{ url_for('static', filename='favicon.webp') }}"
+      href="{{ url_for('static', filename='images/favicon.webp') }}"
     />
-    {% block header %} {% endblock %}
+    {% block header %} 
+    {% endblock %}
     <title>DeltΔverse</title>
   </head>
   <body>
+    <div>
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <ul class="flashes">
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+    </div>
     <nav class="navbar">
       <div class="wrapper nav-container">
         <a href="{{ url_for('home') }}" class="nav-title"
           >Delt<span class="highlight">Δ</span>verse</a
         >
         <div class="nav-links-container">
-          <a id="login" href="{{ url_for('login') }}" class="nav-link"
-            >Log In</a
-          >
-          <a id="logout" href="{{ url_for('home') }}" class="nav-link"
-            >Log Out</a
-          >
-          <a id="register" href="{{ url_for('register') }}" class="nav-link"
+            <a id="login" href="{{ url_for('login') }}" class="nav-link"
+              >Log In</a
+            >
+            <a id="register" href="{{ url_for('register') }}" class="nav-link"
             >Resister</a
-          >
-          <a id="show_cart" href="{{ url_for('cart') }}" class="nav-link"
-            >Cart</a
-          >
+            >
+            <a id="logout" href="{{ url_for('logout') }}" class="nav-link"
+              >Log Out</a
+            >
+            <a id="show_cart" href="{{ url_for('cart') }}" class="nav-link"
+              >Cart</a
+            >
+          {% if current_user.is_authenticated %}
+          <div style="height: 2rem; width: 2rem; border-radius: 100%; background-color: purple; margin-left: 1rem; overflow: hidden; display: inline-block">
+            <span>
+              {{ current_user.username }}
+            </span>
+          </div>
+          {% endif %}
         </div>
       </div>
     </nav>

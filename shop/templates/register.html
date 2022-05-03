@@ -1,9 +1,32 @@
-{% extends 'layout.html' %} {% block content %}
+{% extends 'layout.html' %} 
+{% block header %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/register.css') }}" />
+{% endblock header %}
+{% block content %}
 <div class="title-container">
   <div class="wrapper">
     <h1 class="small-title">
       Register to the Delt<span class="highlight">Δ</span>verse.
     </h1>
   </div>
+</div>
+<div class="form-container">
+  <form method="POST" action="" class="form-container">
+    {{ form.csrf_token }} 
+    {{ form.username_new.label }} {{ form.username_new }} 
+    {% for error in form.username_new.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+    {% endfor %}  
+    {{ form.password_new.label }} {{ form.password_new }} 
+    {% for error in form.password_new.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+    {% endfor %}  
+    {{ form.password_confirm.label }} {{ form.password_confirm }}
+    {% for error in form.password_confirm.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+    {% endfor %} 
+    <input type="submit" value="Register" />
+  </form>
+
 </div>
 {% endblock content %}

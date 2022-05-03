@@ -33,14 +33,14 @@ select {
 .item-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: left;
 }
 
 .item {
   border: 1px solid var(--secondary-color);
   border-radius: 1rem;
   width: 32%;
-  margin-bottom: 1rem;
+  margin: 0 0.5% 1rem 0.5%;
   overflow: hidden;
   cursor: pointer;
 }

@@ -1,0 +1,7 @@
+@import "./style.css";
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem auto;
+}

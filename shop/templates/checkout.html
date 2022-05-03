@@ -1,9 +1,11 @@
-{% extends 'layout.html' %} {% block header %}
+{% extends 'layout.html' %} 
+{% block header %}
 <link
   rel="stylesheet"
-  href="{{ url_for('static', filename='checkout.css') }}"
+  href="{{ url_for('static', filename='styles/checkout.css') }}"
 />
-{% endblock header %} {% block content %}
+{% endblock header %} 
+{% block content %}
 <div class="title-container">
   <div class="wrapper">
     <h1 class="small-title">
@@ -33,7 +35,7 @@
             </p>
             <div style="display: flex">
               <img
-                src="{{ url_for('static', filename='carbon.svg') }}"
+                src="{{ url_for('static', filename='images/carbon.svg') }}"
                 alt="carbon emmisions"
               />
               <p class="item-price" style="margin: 0.1rem 0 0 0.5rem">
