@@ -22,14 +22,24 @@
     <div class="right-content">
       <p class="your-cart-text">Your Cart</p>
 
-      {% for post in posts %}
+      {% for item in items %}
       <div class="cart-item">
-        <img src="{{ post.picture }}" alt="cover" class="cart-picture" />
+        <img src="{{ item.picture }}" alt="cover" class="cart-picture" />
         <div class="cart-content">
-          <p class="item-name">{{ post.name }}</p>
+          <p class="item-name">{{ item.name }}</p>
           <div class="cart-info">
-            <p>£{{ post.price }}</p>
-            <p>CO<sub>2</sub>: {{ post.carbon }}g</p>
+            <p class="item-price" style="margin-right: 1rem">
+              £{{ item.price }}
+            </p>
+            <div style="display: flex">
+              <img
+                src="{{ url_for('static', filename='carbon.svg') }}"
+                alt="carbon emmisions"
+              />
+              <p class="item-price" style="margin: 0.1rem 0 0 0.5rem">
+                {{ item.carbon }}g
+              </p>
+            </div>
           </div>
         </div>
       </div>
