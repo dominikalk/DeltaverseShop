@@ -20,6 +20,7 @@
     <div class="filters-container">
       <form method="POST" action="" style="display: flex;">
         <input type="hidden" name="form_name" value="filters">
+        <input type="hidden" name="sort" value="{{ sort }}" >
         <button type="submit" name="filter_items" value="0" class="filter-item hover-move {{ 'selected-filter-item' if category_id == 0 }}">
           All
         </button>
@@ -33,6 +34,7 @@
 
       <form method="POST" action="" style="position: relative">
         <input type="hidden" name="form_name" value="sort_items">
+        <input type="hidden" name="category_id" value="{{ category_id }}" >
         <select name="sort" onchange="this.form.submit()">
           <option value="price_low" {% if sort=='price_low' %} selected="selected" {% endif %}>Price: Low to High</option>
           <option value="price_high" {% if sort=='price_high' %} selected="selected" {% endif %}>Price: Hight to Low</option>
@@ -50,7 +52,7 @@
       {% for item in items %}
       <a href="{{ url_for('product', product_id=item.id) }}" class="item">
         <div class="item-picture-container">
-          <img src="{{ item.picture }}" alt="cover" class="item-picture" />
+          <img src="{{ item.picture }}" alt="cover" class="item-picture"/>
         </div>
         <div style="padding: 1rem;">
           <div>
@@ -75,8 +77,10 @@
               </p>
             </div>
           </div>
-          <form method="POST" action="">
+          <form method="POST" action="" id='cart_form'>
             <input type="hidden" name="form_name" value="add_to_cart">
+            <input type="hidden" name="sort" value="{{ sort }}" >
+            <input type="hidden" name="category_id" value="{{ category_id }}" >
             <button type="submit" name="add_to_cart" value="{{ item.id }}" class="button">
               Add to cart
             </button>

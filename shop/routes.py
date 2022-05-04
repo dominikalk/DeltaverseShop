@@ -5,28 +5,33 @@ from shop.forms import LoginForm, RegistrationForm
 from flask_login import login_user, logout_user, current_user
 from sqlalchemy import asc, desc
 
-category_id = 0
-sort = 'price_low'
-
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    global category_id
-    global sort
+    category_id = 0
+    sort = 'price_low'
 
     if request.method == 'POST':
         form_name = request.form['form_name']
         if form_name == 'sort_items':
             sort = request.form['sort']
+            category_id = int(request.form['category_id'])
         elif form_name == 'filters':
             category_id = int(request.form['filter_items'])
+            sort = request.form['sort']
         elif form_name == 'add_to_cart':
+            category_id = int(request.form['category_id'])
+            sort = request.form['sort']
+
             if current_user.is_authenticated:
                 item_id = int(request.form['add_to_cart'])
                 item = Item.query.filter_by(id=item_id).first()
                 if item:
-                    current_user.cart.append(item)
-                    db.session.commit()
-                    flash(f'{item.name} has been added to your cart.')
+                    if item in current_user.cart:
+                        flash(f'{item.name} is already in your cart.')
+                    else:
+                        current_user.cart.append(item)
+                        db.session.commit()
+                        flash(f'{item.name} has been added to your cart.')
                 else:
                     flash('Could not find item.')
             else:
