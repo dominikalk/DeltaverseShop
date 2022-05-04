@@ -96,3 +96,9 @@
 .checkout-button:hover {
   transform: translateY(0.2rem);
 }
+
+.no-items-text {
+  text-align: center;
+  font-size: 1.1rem;
+  color: var(--dark-gray);
+}

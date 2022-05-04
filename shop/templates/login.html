@@ -1,4 +1,7 @@
 {% extends 'layout.html' %} 
+{% block header %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/form.css') }}" />
+{% endblock header %}
 {% block content %}
 <div class="title-container">
   <div class="wrapper">
@@ -7,10 +10,20 @@
     </h1>
   </div>
 </div>
-<form method="POST" action="">
-  {{ form.csrf_token }} 
-  {{ form.username.label }} {{ form.username }} 
-  {{ form.password.label }} {{ form.password }}
-  <input type="submit" value="Log In" />
-</form>
+<div class="content-container">
+  <div class="wrapper">
+    <form method="POST" action="" class="form-container">
+      {{ form.csrf_token }} 
+      {{ form.username.label }} {{ form.username }} 
+      {% for error in form.username.errors %}
+        <span class="error">{{ error }}</span>
+      {% endfor %}  
+      {{ form.password.label }} {{ form.password }}
+      {% for error in form.password.errors %}
+        <span class="error">{{ error }}</span>
+      {% endfor %} 
+      <input type="submit" value="Log In" class="button"/>
+    </form>
+  </div>
+</div>
 {% endblock content %}

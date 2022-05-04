@@ -39,12 +39,21 @@
           </div>
         </div>
       </div>
-      <div class="remove-button">Remove</div>
+      <form method="POST" action="" style="height: 100%; display: flex;">
+        <button type="submit" name="remove_item" value="{{ item.id }}" class="remove-button">
+          Remove
+        </button>
+      </form>
+      <!-- <div class="remove-button">Remove</div> -->
     </a>
     {% endfor %}
+    {% if not current_user.cart[0] %}
+    <p class="no-items-text">There is nothing in your cart. Go the the <a href="{{ url_for('home') }}" class="highlight">DeltΔverse Market</a> page to add items to your cart.</p>
+    {% else %}
     <a href="{{ url_for('checkout') }}" class="checkout-button">
       Go to checkout
     </a>
+    {% endif %}
   </div>
 </div>
 {% endblock content %}

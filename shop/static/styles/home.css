@@ -15,9 +15,13 @@
   color: var(--white);
 }
 
+.selected-filter-item {
+  background-color: var(--secondary-color);
+}
+
 select {
   cursor: pointer;
-  padding: 0.7rem 1.4rem 0.7rem 1.2rem;
+  padding: 0.7rem 2.5rem 0.7rem 1.2rem;
   margin-right: 0.5rem;
   border-radius: 1rem;
   background-color: var(--secondary-color);
@@ -27,7 +31,7 @@ select {
   -moz-appearance: none;
   margin: 0;
   outline: none;
-  width: auto;
+  width: 100%;
 }
 
 .item-container {

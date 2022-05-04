@@ -15,44 +15,68 @@
     {% block header %} 
     {% endblock %}
     <title>DeltΔverse</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script>
+        function delete_flash(flash){
+            $(flash).parent().remove()
+        }
+    </script>
   </head>
   <body>
-    <div>
-      {% with messages = get_flashed_messages() %}
-        {% if messages %}
-          <ul class="flashes">
-            {% for message in messages %}
-              <li>{{ message }}</li>
-            {% endfor %}
-          </ul>
-        {% endif %}
-      {% endwith %}
-    </div>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flash-container">
+          {% for message in messages %}
+            <div class="flash">
+              <p style="margin-right: 0.5rem;">{{ message }}</p>
+              <img src="{{ url_for('static', filename='images/x.svg') }}" alt="cross" onclick=delete_flash(this)>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    <script>
+      var flashTop = $('.flash-container').offset().top;
+      $(window).scroll(function() {                 
+          var currentScroll = $(window).scrollTop(); 
+          if (currentScroll >= flashTop - 8) {           
+              $('.flash-container').css({                   
+                  position: 'fixed',
+                  marginTop: '0.5rem'
+              });
+          } else {                         
+              $('.flash-container').css({           
+                  position: 'absolute',
+                  marginTop: '5.5rem'
+              });
+          }
+      });
+    </script>
     <nav class="navbar">
       <div class="wrapper nav-container">
         <a href="{{ url_for('home') }}" class="nav-title"
           >Delt<span class="highlight">Δ</span>verse</a
         >
         <div class="nav-links-container">
-            <a id="login" href="{{ url_for('login') }}" class="nav-link"
+            <a id="login" href="{{ url_for('login') }}" class="nav-link {{ 'nav-link-faint' if current_user.is_authenticated }}"
               >Log In</a
             >
-            <a id="register" href="{{ url_for('register') }}" class="nav-link"
+            <a id="register" href="{{ url_for('register') }}" class="nav-link {{ 'nav-link-faint' if current_user.is_authenticated }}"
             >Resister</a
             >
-            <a id="logout" href="{{ url_for('logout') }}" class="nav-link"
+            <a id="logout" href="{{ url_for('logout') }}" class="nav-link {{ 'nav-link-faint' if not current_user.is_authenticated }}"
               >Log Out</a
             >
-            <a id="show_cart" href="{{ url_for('cart') }}" class="nav-link"
+            <a id="show_cart" href="{{ url_for('cart') }}" class="nav-link {{ 'nav-link-faint' if not current_user.is_authenticated }}"
               >Cart</a
             >
-          {% if current_user.is_authenticated %}
+          <!-- {% if current_user.is_authenticated %}
           <div style="height: 2rem; width: 2rem; border-radius: 100%; background-color: purple; margin-left: 1rem; overflow: hidden; display: inline-block">
             <span>
               {{ current_user.username }}
             </span>
           </div>
-          {% endif %}
+          {% endif %} -->
         </div>
       </div>
     </nav>

@@ -17,6 +17,22 @@ body {
 
   font-family: Arial, Helvetica, sans-serif;
   color: var(--white);
+
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  overflow-x: hidden;
+}
+
+body > * {
+  flex-shrink: 0;
+}
+
+main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 a {
@@ -28,8 +44,7 @@ form {
   margin: 0;
 }
 
-button,
-input[type="submit"] {
+button {
   background: none;
   color: inherit;
   border: none;
@@ -71,6 +86,10 @@ input[type="submit"] {
   font-weight: bold;
 }
 
+.nav-link-faint {
+  opacity: 50%;
+}
+
 .wrapper {
   max-width: var(--wrapper-width);
   padding: 0 2rem;
@@ -80,6 +99,7 @@ input[type="submit"] {
 .button {
   background-color: var(--secondary-color);
   padding: 0.7rem 1rem;
+  height: 40px;
   border-radius: 1rem;
   color: var(--white);
   text-decoration: none;
@@ -140,10 +160,45 @@ input[type="submit"] {
   background-color: var(--white);
   padding: 2rem 0;
   color: var(--dark-gray);
+  flex: 1;
 }
 
 .full-container {
   min-height: calc(100vh - var(--nav-height));
   background: linear-gradient(var(--tertiary-color), var(--secondary-color));
   text-align: center;
+}
+
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(100%);
+  }
+  10% {
+    transform: translateX(0%);
+  }
+  90% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.flash-container {
+  position: absolute;
+  z-index: 10;
+  right: 0;
+  top: 0;
+  animation: 5s ease-out 0s 1 slideInLeft forwards;
+  margin-top: 5.5rem;
+}
+
+.flash {
+  display: flex;
+  margin-right: 1rem;
+  /* margin-top: 5.5rem; */
+  padding: 0.1rem 1.5rem;
+  background-color: var(--primary-color);
+  border-radius: 1rem;
+  color: var(--white);
 }

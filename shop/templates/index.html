@@ -19,29 +19,31 @@
   <div class="wrapper">
     <div class="filters-container">
       <form method="POST" action="" style="display: flex;">
-        <button type="submit" name="filter_items" value="0" class="filter-item hover-move">
+        <input type="hidden" name="form_name" value="filters">
+        <button type="submit" name="filter_items" value="0" class="filter-item hover-move {{ 'selected-filter-item' if category_id == 0 }}">
           All
         </button>
       {% for category in categories %}
-        <button type="submit" name="filter_items" value="{{ category.id }}" class="filter-item hover-move">
+        <button type="submit" name="filter_items" value="{{ category.id }}" class="filter-item hover-move {{ 'selected-filter-item' if category_id == category.id }}">
           {{ category.name }}
         </button>
         <!-- <div class="filter-item hover-move">{{ category.name }}</div> -->
         {% endfor %}
       </form>
 
-      <div style="position: relative">
-        <select name="sort">
-          <option value="price_low">Price: Low to High</option>
-          <option value="price_high">Price: Hight to Low</option>
-          <option value="eco_low">Carbon: Low to High</option>
+      <form method="POST" action="" style="position: relative">
+        <input type="hidden" name="form_name" value="sort_items">
+        <select name="sort" onchange="this.form.submit()">
+          <option value="price_low" {% if sort=='price_low' %} selected="selected" {% endif %}>Price: Low to High</option>
+          <option value="price_high" {% if sort=='price_high' %} selected="selected" {% endif %}>Price: Hight to Low</option>
+          <option value="eco_low" {% if sort=='eco_low' %} selected="selected" {% endif %}>Carbon: Low to High</option>
         </select>
         <img
           src="{{ url_for('static', filename='images/chevron-down.svg') }}"
           alt="chevron-down"
           style="position: absolute; right: 0; margin: 0.6rem 0.5rem"
         />
-      </div>
+      </form>
     </div>
 
     <div class="item-container">
@@ -72,6 +74,7 @@
             </div>
           </div>
           <form method="POST" action="">
+            <input type="hidden" name="form_name" value="add_to_cart">
             <button type="submit" name="add_to_cart" value="{{ item.id }}" class="button">
               Add to cart
             </button>

@@ -1,6 +1,6 @@
 {% extends 'layout.html' %} 
 {% block header %}
-<link rel="stylesheet" href="{{ url_for('static', filename='styles/register.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/form.css') }}" />
 {% endblock header %}
 {% block content %}
 <div class="title-container">
@@ -10,23 +10,24 @@
     </h1>
   </div>
 </div>
-<div class="form-container">
-  <form method="POST" action="" class="form-container">
-    {{ form.csrf_token }} 
-    {{ form.username_new.label }} {{ form.username_new }} 
-    {% for error in form.username_new.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-    {% endfor %}  
-    {{ form.password_new.label }} {{ form.password_new }} 
-    {% for error in form.password_new.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-    {% endfor %}  
-    {{ form.password_confirm.label }} {{ form.password_confirm }}
-    {% for error in form.password_confirm.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-    {% endfor %} 
-    <input type="submit" value="Register" />
-  </form>
-
+<div class="content-container">
+  <div class="wrapper">
+    <form method="POST" action="" class="form-container" autocomplete="off">
+      {{ form.csrf_token }} 
+      {{ form.username_new.label }} {{ form.username_new }} 
+      {% for error in form.username_new.errors %}
+        <span class="error">{{ error }}</span>
+      {% endfor %}  
+      {{ form.password_new.label }} {{ form.password_new }} 
+      {% for error in form.password_new.errors %}
+        <span class="error">{{ error }}</span>
+      {% endfor %}  
+      {{ form.password_confirm.label }} {{ form.password_confirm }}
+      {% for error in form.password_confirm.errors %}
+        <span class="error">{{ error }}</span>
+      {% endfor %} 
+      <input type="submit" value="Register" class="button"/>
+    </form>
+  </div>
 </div>
 {% endblock content %}

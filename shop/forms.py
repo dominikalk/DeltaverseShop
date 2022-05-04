@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired, ValidationError, EqualTo, Length, Regexp
+from wtforms import StringField, SubmitField, PasswordField, HiddenField
+from wtforms.validators import DataRequired, ValidationError, EqualTo, Length
 from shop.models import User
 
 class RegistrationForm(FlaskForm):
@@ -8,11 +8,11 @@ class RegistrationForm(FlaskForm):
         DataRequired(),
         Length(min=5, max=30),
     ])
-    password_new = StringField('Password', validators=[
+    password_new = PasswordField('Password', validators=[
         DataRequired(),
         Length(min=5, max=30),
     ])
-    password_confirm = StringField('Confirm Password', validators=[
+    password_confirm = PasswordField('Confirm Password', validators=[
         DataRequired(),
         EqualTo('password_new', message='Passwords do not match. Try again.')
     ])
@@ -24,6 +24,6 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('Username already exists, please choose a different one.')
 
 class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = StringField('Password', validators=[DataRequired()])
+    username = StringField('Username', validators=[DataRequired(message="Username is required.")])
+    password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Log In')
