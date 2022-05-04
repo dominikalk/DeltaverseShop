@@ -73,6 +73,7 @@ select {
 }
 
 .item-description {
+  height: 55.5px;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 3;
