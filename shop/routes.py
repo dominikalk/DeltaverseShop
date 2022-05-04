@@ -1,7 +1,7 @@
-from flask import request, render_template, redirect, url_for, flash, session
+from flask import request, render_template, redirect, url_for, flash
 from shop import app, db
-from shop.models import User, Item, Category
-from shop.forms import LoginForm, RegistrationForm
+from shop.models import User, Item, Category, Review
+from shop.forms import LoginForm, RegistrationForm, ReviewForm, CheckoutForm
 from flask_login import login_user, logout_user, current_user
 from sqlalchemy import asc, desc
 
@@ -54,10 +54,38 @@ def home():
 
     return render_template('index.html', items=items, categories=categories, category_id=category_id, sort=sort)
 
-@app.route("/product/<int:product_id>")
+@app.route("/product/<int:product_id>", methods=['GET', 'POST'])
 def product(product_id):
     item = Item.query.get_or_404(product_id)
-    return render_template('product.html', item=item )
+    form = ReviewForm()
+
+    if request.method == 'POST':            
+        form_name = request.form['form_name']
+        if form_name == 'add_to_cart':
+            if current_user.is_authenticated:
+                item_id = int(request.form['add_to_cart'])
+                item = Item.query.filter_by(id=item_id).first()
+                if item:
+                    if item in current_user.cart:
+                        flash(f'{item.name} is already in your cart.')
+                    else:
+                        current_user.cart.append(item)
+                        db.session.commit()
+                        flash(f'{item.name} has been added to your cart.')
+                else:
+                    flash('Could not find item.')
+            else:
+                flash('You must be logged in to add an item to your cart.')
+        else:
+            if not current_user.is_authenticated:
+                flash('You must be logged in to review an item.')
+            else:
+                review = Review(rating=form.rating.data, title=form.title.data , text=form.text.data, item_id=item.id)
+                review.user = current_user
+                item.reviews.append(review)
+                db.session.commit()
+                flash(f'Your review has been added to {item.name}')
+    return render_template('product.html', item=item, form=form )
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -67,9 +95,12 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        login_user(user)
-        flash('You have been successfully logged in.')
-        return redirect(url_for('home'))
+        if user:
+            login_user(user)
+            flash('You have been successfully logged in.')
+            return redirect(url_for('home'))
+        else:
+            flash('Invalid password or username.')
     return render_template('login.html', form=form)
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -115,7 +146,11 @@ def cart():
 
     return render_template('cart.html', items=items)
 
-@app.route("/checkout")
+@app.route("/profile")
+def profile():
+    return render_template('profile.html')
+
+@app.route("/checkout", methods=['GET', 'POST'])
 def checkout():
     if not current_user.is_authenticated:
         flash('You must be logged in to checkout.')
@@ -123,8 +158,15 @@ def checkout():
     if len(current_user.cart) < 1:
         flash("You dont have anything in your cart to checkout.")
         return redirect(url_for('home'))
+
+    form = CheckoutForm()
     items = current_user.cart
-    return render_template('checkout.html', items=items)
+    if form.validate_on_submit():
+        # current_user.cart.remove(items)
+        db.session.commit()
+        flash("Checkout successful.")
+        return redirect(url_for('profile'))
+    return render_template('checkout.html', items=items, form=form)
 
 @app.errorhandler(404)
 def page_not_found(error):

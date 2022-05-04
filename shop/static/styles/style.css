@@ -3,8 +3,9 @@
   --secondary-color: #381d78;
   --tertiary-color: #14023f;
   --dark-gray: #111111;
-  --light-gray: #333333;
+  --light-gray: #555555;
   --white: white;
+  --error-color: #ff0033;
   /* old-primary #b78efe */
   --wrapper-width: 1000px;
   --transition: all ease-out 0.2s;

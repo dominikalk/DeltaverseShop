@@ -1,5 +1,6 @@
+from random import choices
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, HiddenField
+from wtforms import StringField, SubmitField, PasswordField, RadioField, TextAreaField, IntegerField
 from wtforms.validators import DataRequired, ValidationError, EqualTo, Length
 from shop.models import User
 
@@ -27,3 +28,18 @@ class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(message="Username is required.")])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Log In')
+
+class ReviewForm(FlaskForm):
+    rating = RadioField('Rating', validators=[DataRequired()], choices=['1', '2', '3', '4', '5'])
+    title = StringField('Title', validators=[DataRequired(), Length(min=3, max=120)])
+    text = TextAreaField('Review', validators=[Length(max=240)])
+    submit = SubmitField('Review Product')
+
+class CheckoutForm(FlaskForm):
+    name = StringField("Card Holder's Name", validators=[DataRequired()])
+    card_no = IntegerField('Card Number', validators=[DataRequired()])
+    submit = SubmitField('Checkout')
+
+    def validate_card_no(self, card_no):
+        if len(str(card_no.data)) != 16:
+            raise ValidationError(f'Card Number must be 16 digits long.')

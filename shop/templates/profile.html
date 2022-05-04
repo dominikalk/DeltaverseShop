@@ -1,0 +1,17 @@
+{% extends 'layout.html' %} 
+{% block header %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/form.css') }}" />
+{% endblock header %}
+{% block content %}
+<div class="title-container">
+  <div class="wrapper">
+    <h1 class="small-title">
+      {{ current_user.username }}
+    </h1>
+  </div>
+</div>
+<div class="content-container">
+  <div class="wrapper">
+  </div>
+</div>
+{% endblock content %}

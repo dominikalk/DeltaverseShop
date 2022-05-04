@@ -1,8 +1,93 @@
 {% extends 'layout.html' %} 
+{% block header %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/product.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/form.css') }}" />
+{% endblock header %}
 {% block content %}
-<div class="full-container">
-  <h1 style="margin: 3rem 0">Product Page</h1>
-  <p>{{ item.name }}</p>
-  <p>{{ item.description }}</p>
+<div class="title-container">
+  <div class="wrapper">
+    <div class="item-container">
+      <img src="{{ item.picture }}" alt="cover" class="item-picture" >
+      <div class="item-content">
+        <div class="item-title-container">
+          <p class="item-title" style="margin-right: auto;">{{ item.name }}</p>
+          <p class="item-tag">£{{ item.price }}</p>
+          <p class="item-tag">{{ item.carbon }}</p>
+          <p class="item-tag">{{ item.category.name }}</p>
+        </div>
+        <p>{{ item.description }}</p>
+        <form method="POST" action="">
+          <input type="hidden" name="form_name" value="add_to_cart">
+          <button type="submit" name="add_to_cart" value="{{ item.id }}" class="button" style="margin-top: 0.7rem;">
+            Add to cart
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="content-container">
+  <div class="wrapper">
+    <h2 class="reviews-text">
+      Reviews
+    </h2>
+    {% if not item.reviews[0] %}
+      <p>This Item has no reviews, be the first to review it?</p>
+    {% else %}
+      {% for review in item.reviews %}
+        <div class="review-container">
+          {% if review.user.picture_url %}
+            <img src="{{ review.user.picture_url }}" alt="user" class="user-icon">
+          {% else %}
+            <img src="{{ url_for('static', filename='images/default.jpeg') }}" alt="user" class="user-icon">
+          {% endif %}
+          <div>
+            <p class="review-title">{{ review.title }} - <span class="highlight">{{ review.user.username }}</span></p>
+            <p class="review-description">{{review.text}}</p>
+            <div style="display: flex;">
+
+            </div>
+            {% for _ in range(review.rating) %}
+              <img src="{{ url_for('static', filename='images/star-fill.svg') }}" alt='star' style="margin-right: 0.3rem;" >
+            {% endfor %}
+            {% for _ in range(5 - review.rating) %}
+              <img src="{{ url_for('static', filename='images/star.svg') }}" alt='star' style="margin-right: 0.3rem;" >
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+    <form method="POST" action="" class="review-form">
+      <!-- Top -->
+      <h3 class="review-form-header">Review {{ item.name }}</h3>
+      {{ form.csrf_token }} 
+      <input type="hidden" name='form_name' value='review_form'>
+      <!-- Review Title -->
+      {{ form.title.label }} {{ form.title }}
+      {% for error in form.title.errors %}
+        <span class="error">{{ error }}</span>
+      {% endfor %} 
+      <!-- Review Text -->
+      {{ form.text.label }} {{ form.text }}
+      {% for error in form.text.errors %}
+        <span class="error">{{ error }}</span>
+      {% endfor %} 
+      <!-- Review Rating -->
+      {{ form.rating.label }}
+      <div>
+        {% for subfield in form.rating %}
+            <tr>
+                <td>{{ subfield }}</td>
+                <td>{{ subfield.label }}</td>
+            </tr>
+        {% endfor %}
+      </div>
+      {% for error in form.rating.errors %}
+        <span class="error">{{ error }}</span>
+      {% endfor %} 
+      <!-- Review Submit -->
+      <input type="submit" value="Review Product" class="button"/>
+    </form>
+  </div>
 </div>
 {% endblock content %}
