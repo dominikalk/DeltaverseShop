@@ -2,7 +2,7 @@
   --primary-color: #9271cb;
   --secondary-color: #381d78;
   --tertiary-color: #14023f;
-  --dark-gray: #111111;
+  --dark-gray: #555555;
   --light-gray: #555555;
   --white: white;
   --error-color: #ff0033;
@@ -202,4 +202,5 @@ button {
   background-color: var(--primary-color);
   border-radius: 1rem;
   color: var(--white);
+  max-width: 400px;
 }

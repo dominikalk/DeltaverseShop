@@ -1,6 +1,8 @@
 {% extends 'layout.html' %} 
 {% block header %}
-<link rel="stylesheet" href="{{ url_for('static', filename='styles/form.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/product.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/home.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/profile.css') }}" />
 {% endblock header %}
 {% block content %}
 <div class="title-container">
@@ -11,7 +13,79 @@
   </div>
 </div>
 <div class="content-container">
-  <div class="wrapper">
+  <div class="wrapper" style="text-align: center;">
+    <h2 class="reviews-text" style="text-align: center;">Your Items</h2>
+    {% if not current_user.inventory[0] %}
+        <p class="no-reviews-text">You have not bought any Items. Go to the <a href="{{ url_for('home') }}" class="highlight">DeltΔverse Market</a> to buy some.</p>
+    {% endif %}
+    <div class="item-container">
+        {% for item in current_user.inventory %}
+        <a href="{{ url_for('product', product_id=item.id) }}" class="item">
+          <div class="item-picture-container">
+            <img src="{{ item.picture }}" alt="cover" class="item-image"/>
+          </div>
+          <div style="padding: 1rem;">
+            <div>
+              <p class="item-name">{{ item.name }}</p>
+              <p class="item-description">{{ item.description }}</p>
+            </div>
+            <div
+              style="
+                display: flex;
+                justify-content: space-around;
+                margin-bottom: 1rem;
+              "
+            >
+              <p class="item-price">£{{ item.price }}</p>
+              <div style="display: flex">
+                <img
+                  src="{{ url_for('static', filename='images/carbon.svg') }}"
+                  alt="carbon emmisions"
+                />
+                <p class="item-price" style="margin: 0.1rem 0 0 0.5rem">
+                  {{ item.carbon }}g
+                </p>
+              </div>
+            </div>
+            <form method="POST" action="">
+              <input type="hidden" name="form_name" value="sell_item">
+              <button type="submit" name="sell_item" value="{{ item.id }}" class="button">
+                Sell
+              </button>
+            </form>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    <h2 class="reviews-text" style="text-align: center;">Your Reviews</h2>
+    {% if not current_user.reviews[0] %}
+        <p class="no-reviews-text">You have not reviewed any products. Go to the <a href="{{ url_for('home') }}" class="highlight">DeltΔverse Market</a> to review some.</p>
+    {% endif %}
+    {% for review in current_user.reviews %}
+    <a href="{{ url_for('product', product_id=review.item.id) }}" class="review-container">
+        <div class="image-container">
+            <img src="{{ review.item.picture }}" alt="product" class="review-image">
+        </div>
+        <div class="review-content">
+            <p class="review-title">{{ review.title }} - <span class="highlight">{{ review.item.name }}</span></p>
+            {% if review.text %}
+                <p class="review-description">{{review.text}}</p>
+            {% endif %}
+            {% for _ in range(review.rating) %}
+                <img src="{{ url_for('static', filename='images/star-fill.svg') }}" alt='star' style="margin-right: 0.3rem;" >
+            {% endfor %}
+            {% for _ in range(5 - review.rating) %}
+                <img src="{{ url_for('static', filename='images/star.svg') }}" alt='star' style="margin-right: 0.3rem;" >
+            {% endfor %}
+        </div>
+        <form method="POST" action="" style="height: 100%; display: flex; margin-left: auto; width: 130px; flex-shrink: 0">
+            <input type="hidden" name="form_name" value='delete_review'>
+            <button type="submit" name="delete_review" value="{{ review.id }}" class="delete-review-button">
+                Delete Review
+            </button>
+        </form>
+      </a>
+    {% endfor %}
   </div>
 </div>
 {% endblock content %}

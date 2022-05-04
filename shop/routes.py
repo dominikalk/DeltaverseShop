@@ -28,6 +28,8 @@ def home():
                 if item:
                     if item in current_user.cart:
                         flash(f'{item.name} is already in your cart.')
+                    elif item in current_user.inventory:
+                        flash(f'You already own {item.name}.')
                     else:
                         current_user.cart.append(item)
                         db.session.commit()
@@ -68,6 +70,8 @@ def product(product_id):
                 if item:
                     if item in current_user.cart:
                         flash(f'{item.name} is already in your cart.')
+                    elif item in current_user.inventory:
+                        flash(f'You already own {item.name}.')
                     else:
                         current_user.cart.append(item)
                         db.session.commit()
@@ -137,7 +141,7 @@ def cart():
     if request.method == 'POST':
         item_id = int(request.form['remove_item'])
         item = Item.query.filter_by(id=item_id).first()
-        if item:
+        if item and item in current_user.cart:
             current_user.cart.remove(item)
             db.session.commit()
             flash(f'{item.name} has been removed from your cart.')
@@ -146,8 +150,26 @@ def cart():
 
     return render_template('cart.html', items=items)
 
-@app.route("/profile")
+@app.route("/profile", methods=['GET', 'POST'])
 def profile():
+    if not current_user.is_authenticated:
+        flash('You must be logged in to view your profile.')
+        return redirect(url_for('home'))
+
+    if request.method == 'POST':            
+        form_name = request.form['form_name']
+        if form_name == 'delete_review':
+            review_id = request.form['delete_review']
+            Review.query.filter_by(id=review_id).delete()
+            db.session.commit()
+            flash('Review has been deleted.')
+        elif form_name == 'sell_item':
+            item_id = request.form['sell_item']
+            item = Item.query.filter_by(id=item_id).first()
+            if item and item in current_user.inventory:
+                current_user.inventory.remove(item)
+                db.session.commit()
+                flash(f'You have sold {item.name} for £{item.price}. The money has been transferred to the bank account that bought it.')
     return render_template('profile.html')
 
 @app.route("/checkout", methods=['GET', 'POST'])
@@ -162,7 +184,8 @@ def checkout():
     form = CheckoutForm()
     items = current_user.cart
     if form.validate_on_submit():
-        # current_user.cart.remove(items)
+        current_user.inventory.extend(current_user.cart)
+        current_user.cart = []
         db.session.commit()
         flash("Checkout successful.")
         return redirect(url_for('profile'))

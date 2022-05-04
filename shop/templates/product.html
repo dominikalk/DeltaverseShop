@@ -9,16 +9,18 @@
     <div class="item-container">
       <img src="{{ item.picture }}" alt="cover" class="item-picture" >
       <div class="item-content">
-        <div class="item-title-container">
-          <p class="item-title" style="margin-right: auto;">{{ item.name }}</p>
-          <p class="item-tag">£{{ item.price }}</p>
-          <p class="item-tag">{{ item.carbon }}</p>
-          <p class="item-tag">{{ item.category.name }}</p>
+        <div>
+          <div class="item-title-container">
+            <p class="item-title" style="margin-right: auto;">{{ item.name }}</p>
+            <p class="item-tag">£{{ item.price }}</p>
+            <p class="item-tag">{{ item.carbon }}</p>
+            <p class="item-tag">{{ item.category.name }}</p>
+          </div>
+          <p>{{ item.description }}</p>
         </div>
-        <p>{{ item.description }}</p>
         <form method="POST" action="">
           <input type="hidden" name="form_name" value="add_to_cart">
-          <button type="submit" name="add_to_cart" value="{{ item.id }}" class="button" style="margin-top: 0.7rem;">
+          <button type="submit" name="add_to_cart" value="{{ item.id }}" class="button">
             Add to cart
           </button>
         </form>
@@ -32,7 +34,7 @@
       Reviews
     </h2>
     {% if not item.reviews[0] %}
-      <p>This Item has no reviews, be the first to review it?</p>
+      <p class="no-reviews-text">This Item has no reviews, be the first to review it?</p>
     {% else %}
       {% for review in item.reviews %}
         <div class="review-container">
@@ -44,9 +46,6 @@
           <div>
             <p class="review-title">{{ review.title }} - <span class="highlight">{{ review.user.username }}</span></p>
             <p class="review-description">{{review.text}}</p>
-            <div style="display: flex;">
-
-            </div>
             {% for _ in range(review.rating) %}
               <img src="{{ url_for('static', filename='images/star-fill.svg') }}" alt='star' style="margin-right: 0.3rem;" >
             {% endfor %}
@@ -57,37 +56,41 @@
         </div>
       {% endfor %}
     {% endif %}
-    <form method="POST" action="" class="review-form">
-      <!-- Top -->
-      <h3 class="review-form-header">Review {{ item.name }}</h3>
-      {{ form.csrf_token }} 
-      <input type="hidden" name='form_name' value='review_form'>
-      <!-- Review Title -->
-      {{ form.title.label }} {{ form.title }}
-      {% for error in form.title.errors %}
-        <span class="error">{{ error }}</span>
-      {% endfor %} 
-      <!-- Review Text -->
-      {{ form.text.label }} {{ form.text }}
-      {% for error in form.text.errors %}
-        <span class="error">{{ error }}</span>
-      {% endfor %} 
-      <!-- Review Rating -->
-      {{ form.rating.label }}
-      <div>
-        {% for subfield in form.rating %}
-            <tr>
-                <td>{{ subfield }}</td>
-                <td>{{ subfield.label }}</td>
-            </tr>
-        {% endfor %}
-      </div>
-      {% for error in form.rating.errors %}
-        <span class="error">{{ error }}</span>
-      {% endfor %} 
-      <!-- Review Submit -->
-      <input type="submit" value="Review Product" class="button"/>
-    </form>
+    {% if current_user.is_authenticated %}
+      <form method="POST" action="" class="review-form">
+        <!-- Top -->
+        <h3 class="review-form-header">Review {{ item.name }}</h3>
+        {{ form.csrf_token }} 
+        <input type="hidden" name='form_name' value='review_form'>
+        <!-- Review Title -->
+        {{ form.title.label }} {{ form.title }}
+        {% for error in form.title.errors %}
+          <span class="error">{{ error }}</span>
+        {% endfor %} 
+        <!-- Review Text -->
+        {{ form.text.label }} {{ form.text }}
+        {% for error in form.text.errors %}
+          <span class="error">{{ error }}</span>
+        {% endfor %} 
+        <!-- Review Rating -->
+        {{ form.rating.label }}
+        <div style="display: flex;">
+          {% for subfield in form.rating %}
+              <tr>
+                  <td>{{ subfield }}</td>
+                  <td>{{ subfield.label }}</td>
+              </tr>
+          {% endfor %}
+        </div>
+        {% for error in form.rating.errors %}
+          <span class="error">{{ error }}</span>
+        {% endfor %} 
+        <!-- Review Submit -->
+        <input type="submit" value="Review Product" class="button"/>
+      </form>
+    {% else %}
+      <p class="no-reviews-text" style="margin-top: 2rem;"><a href="{{ url_for('login') }}" class="highlight">Log in</a> to review this product.</p>
+    {% endif %}
   </div>
 </div>
 {% endblock content %}

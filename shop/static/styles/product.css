@@ -22,6 +22,9 @@
   padding: 1.5rem;
   color: var(--dark-gray);
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .item-title-container {
@@ -91,4 +94,10 @@
 
 .review-description {
   color: var(--light-gray);
+}
+
+.no-reviews-text {
+  margin-top: -1rem;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
 }
