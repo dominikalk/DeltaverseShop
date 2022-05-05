@@ -50,38 +50,36 @@
 
     <div class="item-container">
       {% for item in items %}
-      <a href="{{ url_for('product', product_id=item.id) }}" class="item">
-        <div class="item-picture-container">
+      <a href="{{ url_for('product', product_id=item.id) }}" class="gallery_item">
+        <div class="item-picture-container details">
           <img src="{{ item.picture }}" alt="cover" class="item-picture"/>
         </div>
         <div style="padding: 1rem;">
           <div>
-            <p class="item-name">{{ item.name }}</p>
-            <p class="item-description">{{ item.description }}</p>
+            <p class="item_name">{{ item.name }}</p>
+            <p class="item_description">{{ item.description }}</p>
           </div>
-          <div
-            style="
-              display: flex;
-              justify-content: space-around;
-              margin-bottom: 1rem;
-            "
-          >
-            <p class="item-price">£{{ item.price }}</p>
-            <div style="display: flex">
+          <div class="item-tag-container">
+            <p class="item-tag">
+              £<span class="item_price">{{ item.price }}</span>
+            </p>
+            <div class="item-tag" style="display: flex;">
               <img
                 src="{{ url_for('static', filename='images/carbon.svg') }}"
                 alt="carbon emmisions"
+                style="margin-bottom: 0.2rem;"
               />
-              <p class="item-price" style="margin: 0.1rem 0 0 0.5rem">
+              <p class="item-carbon" style="margin: 0 0 0 0.5rem">
                 {{ item.carbon }}g
               </p>
             </div>
+            <!-- <p class="item-tag">{{ item.category.name }}</p> -->
           </div>
           <form method="POST" action="">
             <input type="hidden" name="form_name" value="add_to_cart">
             <input type="hidden" name="sort" value="{{ sort }}" >
             <input type="hidden" name="category_id" value="{{ category_id }}" >
-            <button type="submit" name="add_to_cart" value="{{ item.id }}" class="button">
+            <button type="submit" name="add_to_cart" value="{{ item.id }}" class="button add_to_cart">
               Add to cart
             </button>
           </form>

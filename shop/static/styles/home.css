@@ -40,7 +40,7 @@ select {
   justify-content: left;
 }
 
-.item {
+.gallery_item {
   border: 1px solid var(--secondary-color);
   border-radius: 1rem;
   width: 32%;
@@ -61,18 +61,18 @@ select {
   transition: var(--transition);
 }
 
-.item:hover .item-picture {
+.gallery_item:hover .item-picture {
   transform: scale(1.1);
 }
 
-.item-name {
+.item_name {
   color: var(--secondary-color);
   margin: 0;
   font-size: 1.2rem;
   font-weight: bold;
 }
 
-.item-description {
+.item_description {
   height: 55.5px;
   overflow: hidden;
   display: -webkit-box;
@@ -80,9 +80,16 @@ select {
   -webkit-box-orient: vertical;
 }
 
-.item-price {
-  color: var(--secondary-color);
-  margin: 0;
-  font-size: 1.2rem;
-  font-weight: bold;
+.item-tag-container {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.item-tag {
+  color: var(--white);
+  background-color: var(--primary-color);
+  padding: 0.6rem 1rem 0.4rem 1rem;
+  border-radius: 2rem;
+  margin: 0 1rem 0 0;
+  height: 1.3rem;
 }

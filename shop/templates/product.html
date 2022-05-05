@@ -10,10 +10,10 @@
       <img src="{{ item.picture }}" alt="cover" class="item-picture" >
       <div class="item-content">
         <div>
-          <div class="item-title-container">
-            <p class="item-title" style="margin-right: auto;">{{ item.name }}</p>
+          <p class="item-title" style="margin-right: auto;">{{ item.name }}</p>
+          <div class="item-tag-container">
             <p class="item-tag">£{{ item.price }}</p>
-            <p class="item-tag">{{ item.carbon }}</p>
+            <p class="item-tag">{{ item.carbon }}g</p>
             <p class="item-tag">{{ item.category.name }}</p>
           </div>
           <p>{{ item.description }}</p>

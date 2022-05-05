@@ -63,6 +63,6 @@
   transition: var(--transition);
 }
 
-.item:hover .item-image {
+.gallery_item:hover .item-image {
   transform: scale(1.1);
 }

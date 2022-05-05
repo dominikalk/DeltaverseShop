@@ -8,7 +8,7 @@ from sqlalchemy import asc, desc
 @app.route("/", methods=['GET', 'POST'])
 def home():
     category_id = 0
-    sort = 'price_low'
+    sort = 'price_high'
 
     if request.method == 'POST':
         form_name = request.form['form_name']
@@ -148,7 +148,10 @@ def cart():
         else:
             flash('Could not find item.')
 
-    return render_template('cart.html', items=items)
+    total_price = 0
+    for item in items:
+        total_price += item.price
+    return render_template('cart.html', items=items, total_price=total_price)
 
 @app.route("/profile", methods=['GET', 'POST'])
 def profile():
@@ -189,7 +192,11 @@ def checkout():
         db.session.commit()
         flash("Checkout successful.")
         return redirect(url_for('profile'))
-    return render_template('checkout.html', items=items, form=form)
+    
+    total_price = 0
+    for item in items:
+        total_price += item.price
+    return render_template('checkout.html', items=items, form=form, total_price=total_price)
 
 @app.errorhandler(404)
 def page_not_found(error):

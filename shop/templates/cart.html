@@ -14,6 +14,7 @@
 </div>
 <div class="content-container">
   <div class="wrapper">
+    <h2 id="total_price" >{{ total_price }}</h2>
     {% for item in items %}
     <a href="{{ url_for('product', product_id=item.id) }}" class="cart-item">
       <div class="cart-picture-container">
@@ -25,22 +26,22 @@
           <p class="item-description">{{ item.description }}</p>
         </div>
         <div class="cart-values">
-          <p class="item-price" style="margin-bottom: 0.5rem">
-            £{{ item.price }}
+          <p class="item_price_text">
+            £<span class="item_price">{{ item.price }}</span>
           </p>
-          <div style="display: flex">
+          <!-- <div style="display: flex">
             <img
               src="{{ url_for('static', filename='images/carbon.svg') }}"
               alt="carbon emmisions"
             />
-            <p class="item-price" style="margin: 0.1rem 0 0 0.5rem">
+            <p class="item-carbon" style="margin: 0.1rem 0 0 0.5rem">
               {{ item.carbon }}g
             </p>
-          </div>
+          </div> -->
         </div>
       </div>
       <form method="POST" action="" style="height: 100%; display: flex;">
-        <button type="submit" name="remove_item" value="{{ item.id }}" class="remove-button">
+        <button type="submit" name="remove_item" value="{{ item.id }}" class="remove">
           Remove
         </button>
       </form>
@@ -50,7 +51,7 @@
     {% if not current_user.cart[0] %}
     <p class="no-items-text">There is nothing in your cart. Go the the <a href="{{ url_for('home') }}" class="highlight">DeltΔverse Market</a> page to add items to your cart.</p>
     {% else %}
-    <a href="{{ url_for('checkout') }}" class="checkout-button">
+    <a href="{{ url_for('checkout') }}" id="checkout" class="checkout-button">
       Go to checkout
     </a>
     {% endif %}
