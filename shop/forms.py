@@ -6,15 +6,15 @@ from shop.models import User
 
 class RegistrationForm(FlaskForm):
     username_new = StringField('Username', validators=[
-        DataRequired(),
-        Length(min=5, max=30),
+        DataRequired(message="Username is required."),
+        Length(min=5, max=30, message="Username must be between 5 and 30 characters long."),
     ])
     password_new = PasswordField('Password', validators=[
-        DataRequired(),
-        Length(min=5, max=30),
+        DataRequired("Password is required."),
+        Length(min=5, max=30, message="Password must be between 5 and 30 characters long."),
     ])
     password_confirm = PasswordField('Confirm Password', validators=[
-        DataRequired(),
+        DataRequired("Confirm Password is required."),
         EqualTo('password_new', message='Passwords do not match. Try again.')
     ])
     submit = SubmitField('Register')
@@ -26,18 +26,18 @@ class RegistrationForm(FlaskForm):
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(message="Username is required.")])
-    password = PasswordField('Password', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired(message="Password is required.")])
     submit = SubmitField('Log In')
 
 class ReviewForm(FlaskForm):
-    rating = RadioField('Rating', validators=[DataRequired()], choices=['1', '2', '3', '4', '5'])
-    title = StringField('Title', validators=[DataRequired(), Length(min=3, max=120)])
-    text = TextAreaField('Review', validators=[Length(max=240)])
+    rating = RadioField('Rating', validators=[DataRequired(message="Rating is required.")], choices=['1', '2', '3', '4', '5'])
+    title = StringField('Title', validators=[DataRequired(message="Title is required."), Length(min=3, max=120, message="Title must be between 3 and 120 characters long.")])
+    text = TextAreaField('Review', validators=[Length(max=240, message="Review must be 240 or less characters long.")])
     submit = SubmitField('Review Product')
 
 class CheckoutForm(FlaskForm):
-    name = StringField("Card Holder's Name", validators=[DataRequired()])
-    card_no = IntegerField('Card Number', validators=[DataRequired()])
+    name = StringField("Card Holder's Name", validators=[DataRequired(message="Card Holder's name is required.")])
+    card_no = IntegerField('Card Number', validators=[DataRequired(message="Card Number is required.")])
     submit = SubmitField('Checkout')
 
     def validate_card_no(self, card_no):

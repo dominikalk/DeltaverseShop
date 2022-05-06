@@ -13,7 +13,16 @@
           <p class="item-title" style="margin-right: auto;">{{ item.name }}</p>
           <div class="item-tag-container">
             <p class="item-tag">£{{ item.price }}</p>
-            <p class="item-tag">{{ item.carbon }}g</p>
+            <div class="item-tag" style="display: flex;">
+              <img
+                src="{{ url_for('static', filename='images/carbon.svg') }}"
+                alt="carbon emmisions"
+                style="margin-bottom: 0.2rem;"
+              />
+              <p class="item-carbon" style="margin: 0 0 0 0.5rem">
+                {{ item.carbon }}g
+              </p>
+            </div>
             <p class="item-tag">{{ item.category.name }}</p>
           </div>
           <p>{{ item.description }}</p>
@@ -57,7 +66,7 @@
       {% endfor %}
     {% endif %}
     {% if current_user.is_authenticated %}
-      <form method="POST" action="" class="review-form">
+      <form method="POST" action="" class="review-form" novalidate style="text-align: left;">
         <!-- Top -->
         <h3 class="review-form-header">Review {{ item.name }}</h3>
         {{ form.csrf_token }} 
@@ -65,12 +74,12 @@
         <!-- Review Title -->
         {{ form.title.label }} {{ form.title }}
         {% for error in form.title.errors %}
-          <span class="error">{{ error }}</span>
+          <span class="error" style="text-align: left;">{{ error }}</span>
         {% endfor %} 
         <!-- Review Text -->
         {{ form.text.label }} {{ form.text }}
         {% for error in form.text.errors %}
-          <span class="error">{{ error }}</span>
+          <span class="error" style="text-align: left;">{{ error }}</span>
         {% endfor %} 
         <!-- Review Rating -->
         {{ form.rating.label }}
@@ -83,7 +92,7 @@
           {% endfor %}
         </div>
         {% for error in form.rating.errors %}
-          <span class="error">{{ error }}</span>
+          <span class="error" style="text-align: left;">{{ error }}</span>
         {% endfor %} 
         <!-- Review Submit -->
         <input type="submit" value="Review Product" class="button"/>

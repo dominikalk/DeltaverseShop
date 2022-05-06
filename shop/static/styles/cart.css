@@ -109,3 +109,11 @@
   font-size: 1.1rem;
   color: var(--dark-gray);
 }
+
+.total_price_text {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.7rem;
+  margin: 1rem 0 3rem 0;
+  color: var(--secondary-color);
+}

@@ -12,7 +12,7 @@
 </div>
 <div class="content-container">
   <div class="wrapper">
-    <form method="POST" action="" class="form-container">
+    <form method="POST" action="" class="form-container" novalidate>
       {{ form.csrf_token }} 
       {{ form.username.label }} {{ form.username }} 
       {% for error in form.username.errors %}

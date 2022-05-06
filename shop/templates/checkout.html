@@ -24,7 +24,7 @@
   <div class="wrapper" style="display: flex">
     <div class="left-content">
       <p class="your-cart-text">Payment Details</p>
-      <form method="POST" action="" class="form-container checkout_form">
+      <form method="POST" action="" class="form-container checkout_form" novalidate>
         {{ form.csrf_token }} 
         {{ form.name.label(style="margin-top: 0") }} {{ form.name }} 
         {% for error in form.name.errors %}

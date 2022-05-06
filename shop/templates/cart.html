@@ -14,7 +14,9 @@
 </div>
 <div class="content-container">
   <div class="wrapper">
-    <h2 id="total_price" >{{ total_price }}</h2>
+    {% if items[0] %}
+      <h2 class="total_price_text" >Total Price - <span class="highlight">£<span id="total_price">{{ total_price }}</span></span></h2>
+    {% endif %}
     {% for item in items %}
     <a href="{{ url_for('product', product_id=item.id) }}" class="cart-item">
       <div class="cart-picture-container">

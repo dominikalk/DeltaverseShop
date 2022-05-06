@@ -34,11 +34,11 @@
     </script>
   </head>
   <body>
-    {% with messages = get_flashed_messages() %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         <div class="flash-container">
-          {% for message in messages %}
-            <div class="flash login_error">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}" id="{{ category }}">
               <p style="margin-right: 0.5rem;">{{ message }}</p>
               <img src="{{ url_for('static', filename='images/x.svg') }}" alt="cross" onclick=delete_flash(this) style="margin-left: auto;">
             </div>
@@ -47,7 +47,8 @@
       {% endif %}
     {% endwith %}
     <script>
-      var flashTop = $('.flash-container').offset().top;
+      var flash = $('.flash-container').offset()
+      var flashTop = flash ? flash.top : undefined;
       $(window).scroll(function() {                 
           var currentScroll = $(window).scrollTop(); 
           if (currentScroll >= flashTop - 8) {           

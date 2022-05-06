@@ -5,7 +5,7 @@
   --dark-gray: #555555;
   --light-gray: #555555;
   --white: white;
-  --error-color: #ff0033;
+  --error-color: #cc0000;
   /* old-primary #b78efe */
   --wrapper-width: 1000px;
   --transition: all ease-out 0.2s;
@@ -171,10 +171,10 @@ button {
 }
 
 @keyframes slideInLeft {
-  0% {
+  /* 0% {
     transform: translateX(100%);
-  }
-  10% {
+  } */
+  0% {
     transform: translateX(0%);
   }
   90% {

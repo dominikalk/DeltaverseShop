@@ -83,12 +83,13 @@ def product(product_id):
         else:
             if not current_user.is_authenticated:
                 flash('You must be logged in to review an item.')
-            else:
+            elif form.validate_on_submit():
                 review = Review(rating=form.rating.data, title=form.title.data , text=form.text.data, item_id=item.id)
                 review.user = current_user
                 item.reviews.append(review)
                 db.session.commit()
                 flash(f'Your review has been added to {item.name}')
+                return redirect(url_for('product', product_id=item.id))
     return render_template('product.html', item=item, form=form )
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -99,12 +100,12 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        if user:
+        if user and user.verify_password(form.password.data):
             login_user(user)
             flash('You have been successfully logged in.')
             return redirect(url_for('home'))
         else:
-            flash('Invalid password or username.')
+            flash('Invalid password or username.', "login_error")
     return render_template('login.html', form=form)
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -190,7 +191,7 @@ def checkout():
         current_user.inventory.extend(current_user.cart)
         current_user.cart = []
         db.session.commit()
-        flash("Checkout successful.")
+        flash("Checkout successful.", "checkout_success")
         return redirect(url_for('profile'))
     
     total_price = 0
