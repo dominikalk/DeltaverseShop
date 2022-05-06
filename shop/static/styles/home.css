@@ -93,3 +93,21 @@ select {
   margin: 0 1rem 0 0;
   height: 1.3rem;
 }
+
+.no-items-text {
+  /* margin-top: -1rem; */
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.clear-button {
+  position: absolute;
+  text-align: left;
+  margin-top: 0.6rem;
+  margin-left: 15.2rem;
+  width: auto;
+}
+
+input[id="search"] {
+  padding-right: 2rem;
+}

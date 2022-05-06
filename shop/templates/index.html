@@ -1,7 +1,14 @@
 {% extends 'layout.html' %} 
 {% block header %}
-<link rel="stylesheet" href="{{ url_for('static', filename='styles/home.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/form.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/home.css') }}" />
+<script>
+  function on_remove_clicked(){
+    searchInput = document.getElementById('search')
+    searchInput.value = ''
+    searchInput.focus()
+  }
+</script>
 {% endblock header %} 
 {% block content %}
 <div class="title-container">
@@ -16,13 +23,16 @@
     </p>
   </div>
 </div>
-<div class="content-container">
+<div class="content-container" style="min-height: 400px;">
   <div class="wrapper">
     <form method="POST" action="" style="display: flex; margin-top: 1rem;">
       <input type="hidden" name="form_name" value="search_items">
       <input type="hidden" name="category_id" value="{{ category_id }}" >
       <input type="hidden" name="sort" value="{{ sort }}" >
-      <input type="text" name="search" placeholder="Search..." value="{{ search }}" style="width: 17rem;">
+      <input type="text" id="search" name="search" placeholder="Search..." value="{{ search }}" style="width: 17rem;">
+      <button type="button" onclick="on_remove_clicked()" class="clear-button">
+        <img src="{{ url_for('static', filename='images/x-purple.svg') }}" alt="cross">
+      </button>
       <button type="submit" name="submit" class="button" style="width: auto; margin-left: 1rem;">
         Search
       </button>
@@ -60,6 +70,9 @@
       </form>
     </div>
 
+    {% if not items[0] %}
+    <p class="no-items-text">No items matched your query. Change them to view matching items.</p>
+    {% endif %}
     <div class="item-container">
       {% for item in items %}
       <a href="{{ url_for('product', product_id=item.id) }}" class="gallery_item">

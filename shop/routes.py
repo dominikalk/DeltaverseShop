@@ -3,7 +3,7 @@ from shop import app, db
 from shop.models import User, Item, Category, Review
 from shop.forms import LoginForm, RegistrationForm, ReviewForm, CheckoutForm
 from flask_login import login_user, logout_user, current_user
-from sqlalchemy import asc, desc
+from sqlalchemy import asc, desc, or_
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
@@ -56,11 +56,14 @@ def home():
         order_by = asc(Item.carbon)
     
     categories = Category.query.all()
-    items = Item.query
-    if category_id == 0:
-        items = items.order_by(order_by).filter(Item.name.like('%' + search + '%'))
-    else:
-        items = items.filter_by(category_id=category_id).filter(Item.name.like('%' + search + '%')).order_by(order_by)
+    items = Item.query.order_by(order_by).filter(
+            or_(
+                Item.name.like('%' + search + '%'), 
+                Item.description.like('%' + search + '%'), 
+                )
+            )
+    if category_id != 0:
+        items = items.filter_by(category_id=category_id)
 
     return render_template('index.html', items=items, categories=categories, category_id=category_id, sort=sort, search=search)
 
