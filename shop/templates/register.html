@@ -14,11 +14,11 @@
   <div class="wrapper">
     <form method="POST" action="" class="form-container" novalidate>
       {{ form.csrf_token }} 
-      {{ form.username_new.label }} {{ form.username_new }} 
+      {{ form.username_new.label }} {{ form.username_new(autocomplete="new-username") }}
       {% for error in form.username_new.errors %}
         <span class="error">{{ error }}</span>
       {% endfor %}  
-      {{ form.password_new.label }} {{ form.password_new }} 
+      {{ form.password_new.label }} {{ form.password_new(autocomplete="new-password") }}
       {% for error in form.password_new.errors %}
         <span class="error">{{ error }}</span>
       {% endfor %}  

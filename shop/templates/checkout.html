@@ -26,11 +26,23 @@
       <p class="your-cart-text">Payment Details</p>
       <form method="POST" action="" class="form-container checkout_form" novalidate>
         {{ form.csrf_token }} 
-        {{ form.name.label(style="margin-top: 0") }} {{ form.name }} 
+        {{ form.name.label(style="margin-top: 0") }}
+        <div class="tip-container">
+          {{ form.name }} 
+          <div class="tip">
+            <p class="tip-text">The name displayed on the card.</p>
+          </div>
+        </div>
         {% for error in form.name.errors %}
           <span class="error">{{ error }}</span>
         {% endfor %}  
-        {{ form.card_no.label }} {{ form.card_no }}
+        {{ form.card_no.label }} 
+        <div class="tip-container">
+          {{ form.card_no }}
+          <div class="tip">
+            <p class="tip-text">Card Number must be 16 digits long.</p>
+          </div>
+        </div>
         {% for error in form.card_no.errors %}
           <span class="error">{{ error }}</span>
         {% endfor %} 

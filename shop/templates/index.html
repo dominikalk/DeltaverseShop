@@ -1,6 +1,7 @@
 {% extends 'layout.html' %} 
 {% block header %}
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/home.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/form.css') }}" />
 {% endblock header %} 
 {% block content %}
 <div class="title-container">
@@ -17,10 +18,20 @@
 </div>
 <div class="content-container">
   <div class="wrapper">
+    <form method="POST" action="" style="display: flex; margin-top: 1rem;">
+      <input type="hidden" name="form_name" value="search_items">
+      <input type="hidden" name="category_id" value="{{ category_id }}" >
+      <input type="hidden" name="sort" value="{{ sort }}" >
+      <input type="text" name="search" placeholder="Search..." value="{{ search }}" style="width: 17rem;">
+      <button type="submit" name="submit" class="button" style="width: auto; margin-left: 1rem;">
+        Search
+      </button>
+    </form>
     <div class="filters-container">
       <form method="POST" action="" style="display: flex;">
         <input type="hidden" name="form_name" value="filters">
         <input type="hidden" name="sort" value="{{ sort }}" >
+        <input type="hidden" name="search" value="{{ search }}">
         <button type="submit" name="filter_items" value="0" class="filter-item hover-move {{ 'selected-filter-item' if category_id == 0 }}">
           All
         </button>
@@ -35,6 +46,7 @@
       <form method="POST" action="" style="position: relative">
         <input type="hidden" name="form_name" value="sort_items">
         <input type="hidden" name="category_id" value="{{ category_id }}" >
+        <input type="hidden" name="search" value="{{ search }}">
         <select name="sort" onchange="this.form.submit()">
           <option value="price_low" {% if sort=='price_low' %} selected="selected" {% endif %}>Price: Low to High</option>
           <option value="price_high" {% if sort=='price_high' %} selected="selected" {% endif %}>Price: Hight to Low</option>
@@ -78,6 +90,7 @@
           <form method="POST" action="">
             <input type="hidden" name="form_name" value="add_to_cart">
             <input type="hidden" name="sort" value="{{ sort }}" >
+            <input type="hidden" name="search" value="{{ search }}">
             <input type="hidden" name="category_id" value="{{ category_id }}" >
             <button type="submit" name="add_to_cart" value="{{ item.id }}" class="button add_to_cart">
               Add to cart

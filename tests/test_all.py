@@ -165,7 +165,7 @@ def test_system(py):
     session2_items_in_cart = add_to_cart(py,[1])
     total_price_correct,_,_ = check_cart(py,session2_items_in_cart)
     results["Second cart ok"] = total_price_correct 
-    py.screenshot("other_cart.png")
+    py.screenshot("test_results/other_cart.png")
     
     print ("Testing checkout")
     py.get("#checkout").click()
