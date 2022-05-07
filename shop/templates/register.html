@@ -1,8 +1,9 @@
-{% extends 'layout.html' %} 
-{% block header %}
-<link rel="stylesheet" href="{{ url_for('static', filename='styles/form.css') }}" />
-{% endblock header %}
-{% block content %}
+{% extends 'layout.html' %} {% block header %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='styles/form.css') }}"
+/>
+{% endblock header %} {% block content %}
 <div class="title-container">
   <div class="wrapper">
     <h1 class="small-title">
@@ -13,20 +14,19 @@
 <div class="content-container">
   <div class="wrapper">
     <form method="POST" action="" class="form-container" novalidate>
-      {{ form.csrf_token }} 
-      {{ form.username_new.label }} {{ form.username_new(autocomplete="new-username") }}
-      {% for error in form.username_new.errors %}
-        <span class="error">{{ error }}</span>
-      {% endfor %}  
-      {{ form.password_new.label }} {{ form.password_new(autocomplete="new-password") }}
-      {% for error in form.password_new.errors %}
-        <span class="error">{{ error }}</span>
-      {% endfor %}  
-      {{ form.password_confirm.label }} {{ form.password_confirm }}
+      {{ form.csrf_token }} {{ form.username_new.label }} {{
+      form.username_new(autocomplete="new-username") }} {% for error in
+      form.username_new.errors %}
+      <span class="error">{{ error }}</span>
+      {% endfor %} {{ form.password_new.label }} {{
+      form.password_new(autocomplete="new-password") }} {% for error in
+      form.password_new.errors %}
+      <span class="error">{{ error }}</span>
+      {% endfor %} {{ form.password_confirm.label }} {{ form.password_confirm }}
       {% for error in form.password_confirm.errors %}
-        <span class="error">{{ error }}</span>
-      {% endfor %} 
-      <input type="submit" value="Register" class="button"/>
+      <span class="error">{{ error }}</span>
+      {% endfor %}
+      <input type="submit" value="Register" class="button" />
     </form>
   </div>
 </div>

@@ -1,8 +1,9 @@
-{% extends 'layout.html' %} 
-{% block header %}
-<link rel="stylesheet" href="{{ url_for('static', filename='styles/cart.css') }}" />
-{% endblock header %} 
-{% block content %}
+{% extends 'layout.html' %} {% block header %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='styles/cart.css') }}"
+/>
+{% endblock header %} {% block content %}
 <div class="title-container">
   <div class="wrapper">
     <h1 class="small-title">Delt<span class="highlight">Δ</span>verse Cart.</h1>
@@ -15,12 +16,16 @@
 <div class="content-container">
   <div class="wrapper">
     {% if items[0] %}
-      <h2 class="total_price_text" >Total Price - <span class="highlight">£<span id="total_price">{{ total_price }}</span></span></h2>
-    {% endif %}
-    {% for item in items %}
+    <h2 class="total_price_text">
+      Total Price -
+      <span class="highlight"
+        >£<span id="total_price">{{ total_price }}</span></span
+      >
+    </h2>
+    {% endif %} {% for item in items %}
     <a href="{{ url_for('product', product_id=item.id) }}" class="cart-item">
       <div class="cart-picture-container">
-        <img src="{{ item.picture }}" alt="cover" class="cart-picture"/>
+        <img src="{{ item.picture }}" alt="cover" class="cart-picture" />
       </div>
       <div class="cart-content">
         <div class="cart-info">
@@ -42,16 +47,24 @@
           </div> -->
         </div>
       </div>
-      <form method="POST" action="" style="height: 100%; display: flex;">
-        <button type="submit" name="remove_item" value="{{ item.id }}" class="remove">
+      <form method="POST" action="" style="height: 100%; display: flex">
+        <button
+          type="submit"
+          name="remove_item"
+          value="{{ item.id }}"
+          class="remove"
+        >
           Remove
         </button>
       </form>
       <!-- <div class="remove-button">Remove</div> -->
     </a>
-    {% endfor %}
-    {% if not current_user.cart[0] %}
-    <p class="no-items-text">There is nothing in your cart. Go the the <a href="{{ url_for('home') }}" class="highlight">DeltΔverse Market</a> page to add items to your cart.</p>
+    {% endfor %} {% if not current_user.cart[0] %}
+    <p class="no-items-text">
+      There is nothing in your cart. Go the the
+      <a href="{{ url_for('home') }}" class="highlight">DeltΔverse Market</a>
+      page to add items to your cart.
+    </p>
     {% else %}
     <a href="{{ url_for('checkout') }}" id="checkout" class="checkout-button">
       Go to checkout

@@ -1,5 +1,4 @@
-{% extends 'layout.html' %} 
-{% block header %}
+{% extends 'layout.html' %} {% block header %}
 <link
   rel="stylesheet"
   href="{{ url_for('static', filename='styles/checkout.css') }}"
@@ -8,8 +7,7 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='styles/form.css') }}"
 />
-{% endblock header %} 
-{% block content %}
+{% endblock header %} {% block content %}
 <div class="title-container">
   <div class="wrapper">
     <h1 class="small-title">
@@ -24,19 +22,22 @@
   <div class="wrapper" style="display: flex">
     <div class="left-content">
       <p class="your-cart-text">Payment Details</p>
-      <form method="POST" action="" class="form-container checkout_form" novalidate>
-        {{ form.csrf_token }} 
-        {{ form.name.label(style="margin-top: 0") }}
+      <form
+        method="POST"
+        action=""
+        class="form-container checkout_form"
+        novalidate
+      >
+        {{ form.csrf_token }} {{ form.name.label(style="margin-top: 0") }}
         <div class="tip-container">
-          {{ form.name }} 
+          {{ form.name }}
           <div class="tip">
             <p class="tip-text">The name displayed on the card.</p>
           </div>
         </div>
         {% for error in form.name.errors %}
-          <span class="error">{{ error }}</span>
-        {% endfor %}  
-        {{ form.card_no.label }} 
+        <span class="error">{{ error }}</span>
+        {% endfor %} {{ form.card_no.label }}
         <div class="tip-container">
           {{ form.card_no }}
           <div class="tip">
@@ -44,13 +45,15 @@
           </div>
         </div>
         {% for error in form.card_no.errors %}
-          <span class="error">{{ error }}</span>
-        {% endfor %} 
-        <input type="submit" id="submit" value="Checkout" class="button"/>
+        <span class="error">{{ error }}</span>
+        {% endfor %}
+        <input type="submit" id="submit" value="Checkout" class="button" />
       </form>
     </div>
     <div class="right-content">
-      <p class="your-cart-text">Your Cart - <span class="highlight" >£{{ total_price }}</span></p>
+      <p class="your-cart-text">
+        Your Cart - <span class="highlight">£{{ total_price }}</span>
+      </p>
 
       {% for item in items %}
       <div class="cart-item">

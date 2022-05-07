@@ -51,6 +51,7 @@ pytest-parallel==0.1.1
 pytest-reportportal==5.1.0
 pytest-xdist==2.5.0
 python-dateutil==2.8.2
+python-dotenv==0.20.0
 reportportal-client==5.2.0
 requests==2.27.1
 selenium==4.1.3
