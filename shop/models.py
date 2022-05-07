@@ -47,7 +47,7 @@ class Item(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
     category = db.relationship("Category")
     description = db.Column(db.Text, nullable=False)
-    picture = db.Column(db.String(100), nullable=False, default='default.jpg')
+    picture = db.Column(db.String(150), nullable=False, default='default.jpg')
     price = db.Column(db.Integer, nullable=False)
     carbon = db.Column(db.Integer, nullable=False)
     reviews = db.relationship("Review", back_populates="item")
