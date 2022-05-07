@@ -55,7 +55,7 @@ def home():
     else:
         order_by = asc(Item.carbon)
     
-    categories = Category.query.all()
+    categories = Category.query.order_by(Category.id)
     items = Item.query.order_by(order_by).filter(
             or_(
                 Item.name.like('%' + search + '%'), 

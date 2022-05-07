@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI")
-SECRET_KEY = os.urandom(32)
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 app = Flask(__name__, static_folder='static')
 
