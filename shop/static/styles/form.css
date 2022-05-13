@@ -46,6 +46,17 @@ textarea:focus {
   border-color: var(--primary-color);
 }
 
+input[type="radio"] {
+  outline: none;
+  accent-color: var(--secondary-color);
+  margin-right: 0.5rem;
+  margin-left: 0.2rem;
+}
+
+.radio-label {
+  margin-top: 0.9rem;
+}
+
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
